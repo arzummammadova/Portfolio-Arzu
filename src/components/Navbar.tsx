@@ -1,7 +1,7 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
-import { ChevronRight, MenuIcon } from 'lucide-react';
+import { ChevronRight, Link, MenuIcon } from 'lucide-react';
 
 const Navbar = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
@@ -17,10 +17,10 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-3">
-             <a href='/'  className="border hover:bg-black transition hover:text-white text-xl justify-center items-center rounded-xl px-5  py-2 flex gap-3 ">Let's talk
+             <Link href='/'  className="border hover:bg-black transition hover:text-white text-xl justify-center items-center rounded-xl px-5  py-2 flex gap-3 ">Let's talk
                 <ChevronRight />
             
-             </a>
+             </Link>
 
             <div className="md:order-last border px-5 py-2 rounded-xl">
 
@@ -35,14 +35,14 @@ const Navbar = () => {
             >
                 <ul className='flex flex-col p-8 space-y-4 text-xl mt-16'>
                     <li>
-                        <a href="/" onClick={toggleMenu} className="block text-gray-800 hover:text-blue-600 transition-colors text-2xl font-semibold">
+                        <Link href="/" onClick={toggleMenu} className="block text-gray-800 hover:text-blue-600 transition-colors text-2xl font-semibold">
                             Home
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="/letstalk" onClick={toggleMenu} className="block text-gray-800 hover:text-blue-600 transition-colors text-2xl font-semibold">
+                        <Link href="/letstalk" onClick={toggleMenu} className="block text-gray-800 hover:text-blue-600 transition-colors text-2xl font-semibold">
                             Let's Talk
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

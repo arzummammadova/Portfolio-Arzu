@@ -1,8 +1,15 @@
-import Image from "next/image";
-
+'use client';
+import AboutMe from "@/components/AboutMe";
+import Education from "@/components/Education";
+import Hero from "@/components/Hero";
 export default function Home() {
   return (
-    <h1>salam</h1>
-    
+    <div>
+      <Hero />
+
+      {/* <AboutMe /> */}
+      <Education/>
+    </div>
   );
 }
+

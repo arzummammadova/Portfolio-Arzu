@@ -1,5 +1,7 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -23,4 +25,17 @@ body {
   background: var(--fooreground);
   color: var(--background);
   font-family: "Montserrat", sans-serif;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
 }

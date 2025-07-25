@@ -24,7 +24,7 @@
 
 body {
   background: var(--fooreground);
-  color: var(--background);
+  color:black;
   font-family: "Montserrat", sans-serif;
 }
 

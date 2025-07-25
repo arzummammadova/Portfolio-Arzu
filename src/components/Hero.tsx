@@ -1,7 +1,8 @@
-import { MoveUpRight } from 'lucide-react'
-import React from 'react'
-import Image from "next/image"
-import { Typewriter } from 'react-simple-typewriter'
+'use client';
+import { MoveUpRight } from 'lucide-react';
+import React from 'react';
+import Image from "next/image";
+import { Typewriter } from 'react-simple-typewriter';
 
 const Hero = () => {
   return (
@@ -10,15 +11,14 @@ const Hero = () => {
         <p className="text-xl font-medium text-gray-600">
           <Typewriter
             words={[
-  "Hello! I am Arzu",
-  "I am Arzu Mammadova, a final-year student at Azerbaijan Technical University.",
-  "I specialize in front-end development with React, Redux, Tailwind CSS, and Material UI.",
-  "I am currently learning Next.js, Zustand, and Zod.",
-  "I also have backend experience with Node.js, Express.js, and MongoDB.",
-  "Recently, I started learning Oracle SQL.",
-  "My goal is to become a full-stack developer and build impactful digital products."
-]}
-
+              "Hello! I am Arzu",
+              "I am Arzu Mammadova, a final-year student at Azerbaijan Technical University.",
+              "I specialize in front-end development with React, Redux, Tailwind CSS, and Material UI.",
+              "I am currently learning Next.js, Zustand, and Zod.",
+              "I also have backend experience with Node.js, Express.js, and MongoDB.",
+              "Recently, I started learning Oracle SQL.",
+              "My goal is to become a full-stack developer and build impactful digital products."
+            ]}
             loop={true}
             cursor
             cursorStyle="|"
@@ -39,8 +39,8 @@ const Hero = () => {
           <span className="border px-3 py-1 text-2xl rounded-full">U</span>
         </div>
 
-        <button className="flex justify-center gap-1 mt-9 bg-black text-white w-[300px] text-xl py-5 rounded-4xl hover:bg-white hover:text-black transition-colors border">
-          Let &#39;s talk <MoveUpRight />
+        <button className="flex justify-center gap-2 mt-9 bg-black text-white w-[300px] text-xl py-5 rounded-[2rem] hover:bg-white hover:text-black transition-colors border">
+          Let&#39;s talk <MoveUpRight />
         </button>
       </div>
 
@@ -51,7 +51,7 @@ const Hero = () => {
         height={200}
         className="bottom-0 absolute left-0 z-0"
       />
-      <Image 
+      <Image
         src="/images/bubbleright.png"
         alt="Bubble Right"
         width={200}
@@ -66,7 +66,7 @@ const Hero = () => {
         className="top-20 absolute right-20 z-0"
       />
     </>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

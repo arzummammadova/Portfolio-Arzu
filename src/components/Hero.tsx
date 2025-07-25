@@ -10,14 +10,15 @@ const Hero = () => {
         <p className="text-xl font-medium text-gray-600">
           <Typewriter
             words={[
-              "Hello! I am Arzu",
-              "I am Arzu Mammadova, a final-year student at Azerbaijan Technical University.",
-              "I specialize in front-end development with React, Redux, Tailwind CSS, and Material UI.",
-              "I am currently learning Next.js, Zustand, and Zod.",
-              "I also have backend experience with Node.js, Express.js, and MongoDB.",
-              "Recently, I started learning Oracle SQL.",
-              "My goal is to become a full-stack developer and build impactful digital products."
-            ]}
+  "Hello! I am Arzu",
+  "I am Arzu Mammadova, a final-year student at Azerbaijan Technical University.",
+  "I specialize in front-end development with React, Redux, Tailwind CSS, and Material UI.",
+  "I am currently learning Next.js, Zustand, and Zod.",
+  "I also have backend experience with Node.js, Express.js, and MongoDB.",
+  "Recently, I started learning Oracle SQL.",
+  "My goal is to become a full-stack developer and build impactful digital products."
+]}
+
             loop={true}
             cursor
             cursorStyle="|"

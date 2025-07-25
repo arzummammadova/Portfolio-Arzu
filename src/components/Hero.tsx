@@ -39,7 +39,7 @@ const Hero = () => {
         </div>
 
         <button className="flex justify-center gap-1 mt-9 bg-black text-white w-[300px] text-xl py-5 rounded-4xl hover:bg-white hover:text-black transition-colors border">
-          Let's talk <MoveUpRight />
+          Let &#39;s talk <MoveUpRight />
         </button>
       </div>
 

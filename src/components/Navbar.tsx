@@ -44,7 +44,7 @@ const Navbar = () => {
                     </li>
                     <li>
                         <Link href="/letstalk" onClick={toggleMenu} className="block text-gray-800 hover:text-blue-600 transition-colors text-2xl font-semibold">
-                            Let's Talk
+                            Let&#39;s Talk
                         </Link>
                     </li>
                 </ul>

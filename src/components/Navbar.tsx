@@ -11,23 +11,26 @@ const Navbar = () => {
     };
 
     return (
-        <div className='container mx-auto px-4 flex justify-between items-center'>
+        <div className='container mx-auto px-4 flex justify-between items-center py-6'>
             <div className="flex items-center">
                 <Image src="/images/portfolio-logo.png" alt="Portfolio Logo" width={40} height={40} />
             </div>
 
             <div className="flex items-center gap-3">
-             <Link href='/'  className="border hover:bg-black transition hover:text-white text-xl justify-center items-center rounded-xl px-5  py-2 flex gap-3 ">Let's talk
-                <ChevronRight />
-            
-             </Link>
+                <button
+                    className="border text-black bg-white text-xl justify-center items-center rounded-xl px-5 py-2 flex gap-3"
+                >
+                    Let&#39;s talk
+                    <ChevronRight />
+                </button>
 
-            <div className="md:order-last border px-5 py-2 rounded-xl">
 
-                <MenuIcon size={28} onClick={toggleMenu} className="cursor-pointer text-gray-800 hover:text-gray-600 transition-colors" />
-            </div>    
+                <div className="md:order-last border px-5 py-2 rounded-xl">
+
+                    <MenuIcon size={28} onClick={toggleMenu} className="cursor-pointer text-gray-800 hover:text-gray-600 transition-colors" />
+                </div>
             </div>
-           
+
 
             <div
                 className={`fixed top-0 right-0 h-full bg-white w-64 shadow-lg transform transition-transform duration-300 ease-in-out z-50

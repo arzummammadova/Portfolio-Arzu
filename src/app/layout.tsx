@@ -5,17 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 
-const Montserrat=Geist_Mono({
-  variable:"--font-geist-mono",
-  subsets:["latin"],
-  display: "swap",
 
-})
-
-export const metadata: Metadata = {
-  title: "Portfolio",
-  description: " A portfolio showcasing my work and skills.",
-};
 
 export default function RootLayout({
   children,

@@ -49,7 +49,7 @@ const Hero = () => {
         alt="Bubble Left"
         width={200}
         height={200}
-        className="bubble-left w-[220px] sm:w-[100px] md:w-[220px]"
+        className="bubble-left w-[120px] sm:w-[100px] lg:w-[220px] md:w-[220px]"
       
       />
 
@@ -58,7 +58,7 @@ const Hero = () => {
         alt="Bubble Right"
         width={200}
         height={200}
-        className="bubble-right w-[220px] sm:w-[100px] md:w-[220px]"
+        className="bubble-right w-[120px] sm:w-[100px] lg:w-[240px] md:w-[220px]"
       />
 
       <Image

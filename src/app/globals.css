@@ -40,3 +40,33 @@ body {
 .animate-scroll {
   animation: scroll 20s linear infinite;
 }
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+  border-radius: 50%;
+  backdrop-filter: blur(17px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  mix-blend-mode: difference;
+  z-index: 9999;
+  transition: transform 0.15s ease-out, background 0.3s;
+
+  box-shadow:
+    0 0 6px rgba(87, 0, 164, 0.3),
+    0 0 12px rgba(87, 0, 164, 0.4),
+    0 0 20px rgba(87, 0, 164, 0.25);
+}
+
+
+.custom-cursor.hovering {
+  box-shadow:
+    0 0 10px rgba(87, 0, 164, 0.4),
+    0 0 20px rgba(87, 0, 164, 0.5),
+    0 0 35px rgba(87, 0, 164, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+}

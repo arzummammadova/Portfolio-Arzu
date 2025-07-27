@@ -6,6 +6,7 @@ const Education = () => {
     <div>
         <Title text='My Educations' />
       <table>
+        
 
       </table>
     </div>

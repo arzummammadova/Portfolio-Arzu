@@ -45,26 +45,29 @@ const Hero = () => {
       </div>
 
       <Image
-        src="/images/bubbleleft.png"
-        alt="Bubble Left"
-        width={200}
-        height={200}
-        className="bottom-0 absolute left-0 z-0"
-      />
-      <Image
-        src="/images/bubbleright.png"
-        alt="Bubble Right"
-        width={200}
-        height={200}
-        className="top-40 absolute right-0 z-0"
-      />
-      <Image
-        src="/images/rightglass.png"
-        alt="Right Glass"
-        width={800}
-        height={700}
-        className="top-20 absolute right-20 z-0"
-      />
+  src="/images/bubbleleft.png"
+  alt="Bubble Left"
+  width={200}
+  height={200}
+  className="bubble-left"
+/>
+
+<Image
+  src="/images/bubbleright.png"
+  alt="Bubble Right"
+  width={200}
+  height={200}
+  className="bubble-right"
+/>
+
+<Image
+  src="/images/rightglass.png"
+  alt="Right Glass"
+  width={800}
+  height={700}
+  className="glass-float"
+/>
+
     </>
   );
 };

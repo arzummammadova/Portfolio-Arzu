@@ -43,13 +43,12 @@ const Hero = () => {
           Let&#39;s talk <MoveUpRight />
         </button>
       </div>
-
       <Image
   src="/images/bubbleleft.png"
   alt="Bubble Left"
   width={200}
   height={200}
-  className="bubble-left"
+  className="bubble-left w-[120px] sm:w-[150px] md:w-[180px]"
 />
 
 <Image
@@ -57,7 +56,7 @@ const Hero = () => {
   alt="Bubble Right"
   width={200}
   height={200}
-  className="bubble-right"
+  className="bubble-right w-[120px] sm:w-[150px] md:w-[180px]"
 />
 
 <Image
@@ -65,7 +64,7 @@ const Hero = () => {
   alt="Right Glass"
   width={800}
   height={700}
-  className="glass-float"
+  className="glass-float w-[300px] sm:w-[500px] md:w-[700px]"
 />
 
     </>

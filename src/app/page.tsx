@@ -2,6 +2,9 @@
 import { useEffect } from 'react';
 import Education from "@/components/Education";
 import Hero from "@/components/Hero";
+import MyCertifications from '@/components/MyCertifications';
+import MyProjects from '@/components/MyProjects';
+import WorkExperience from '@/components/Contact';
 
 export default function Home() {
   useEffect(() => {
@@ -39,6 +42,9 @@ export default function Home() {
       <div className="custom-cursor"></div>
       <Hero />
       <Education />
+      <MyCertifications/>
+      <MyProjects/>
+      <WorkExperience/>
     </div>
   );
 }

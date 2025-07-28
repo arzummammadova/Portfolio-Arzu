@@ -92,6 +92,15 @@ body {
     width: fit-content;
     text-align: center;
   }
+  table tr td:nth-child(3){
+    text-align: center;
+  }
+  table tr td:nth-child(4){
+    text-align: center;
+  }
+  tr td{
+    padding: 10px!important;
+  }
 
   .order{
     padding-top: 30px!important;
@@ -113,7 +122,7 @@ body {
     transform: translateY(0) translateX(0);
   }
   50% {
-    transform: translateY(-20px) translateX(10px);
+    transform: translateY(-20px) translateX(4px);
   }
 }
 
@@ -142,6 +151,13 @@ body {
   animation: float-left 3s ease-in-out infinite;
 }
 
+.bubble-right-education {
+  position: absolute;
+  bottom: 0rem;
+  right: 0;
+  z-index: 0;
+  animation: float-left 4s ease-in-out infinite;
+}
 .glass-float {
   position: absolute;
   top: 5rem;

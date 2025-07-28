@@ -9,23 +9,24 @@ const Contact = () => {
 
   const data = {
     email: 'arzuimammadova@gmail.com',
-    linkedin: 'https://www.linkedin.com/in/arzu-mammadova-892b25269?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
+    linkedin:
+      'https://www.linkedin.com/in/arzu-mammadova-892b25269?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
     github: 'https://github.com/arzummammadova',
     instagram: ['codingwitharzuui', 'justarzuui'],
-    address: 'Azerbaijan'
+    address: 'Azerbaijan',
   };
 
   return (
-    <div className="w-full border-t  border-gray-300 h-[900px] relative flex flex-col justify-center items-center overflow-hidden">
+    <div className="w-full border-t border-gray-300 min-h-screen relative flex flex-col justify-center items-center overflow-hidden">
       <Image
         src="/images/blackline.png"
         alt="blackline"
         fill
-        className="object-cover w-full h-full z-0"
+        className="object-cover w-full h-full z-0 hidden lg:block"
       />
 
       {/* Başlıq */}
-      <h2 className="text-4xl sm:text-6xl md:text-8xl absolute top-1/2 left-5 md:left-[10%] w-[90%] md:w-[30%] tracking-[0.1em] text-black z-10 text-center md:text-left">
+      <h2 className="text-3xl sm:text-5xl md:text-7xl absolute top-8 sm:top-10 md:top-1/2 left-4 sm:left-6 md:left-[10%] w-[90%] md:w-[30%] tracking-[0.05em] text-black z-10 text-center md:text-left">
         Contact with Me
       </h2>
 
@@ -35,24 +36,40 @@ const Contact = () => {
         initial={{ opacity: 0, y: 100 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 1, ease: 'easeOut' }}
-        className="absolute top-[60%] md:top-[28%] right-0 md:right-[10%] p-4 md:p-8 w-full md:w-auto bg-white/80 md:bg-transparent rounded-none md:rounded-lg z-10 flex flex-col gap-4 md:gap-6"
+        className="absolute top-28 sm:top-36 md:top-[28%] right-0 md:right-[10%] p-4 md:p-8 w-full sm:w-[90%] md:w-auto bg-white/90 md:bg-transparent rounded-none md:rounded-lg z-10 flex flex-col gap-4 md:gap-6"
       >
         {/* Email */}
         <div className="flex items-center bg-[#FFE2E2] gap-4 text-lg md:text-xl border border-3 rounded-lg p-3 md:p-4">
           <MailCheck size={24} />
-          <a href={`mailto:${data.email}`} className="text-black hover:underline">{data.email}</a>
+          <a href={`mailto:${data.email}`} className="text-black hover:underline">
+            {data.email}
+          </a>
         </div>
 
         {/* LinkedIn */}
         <div className="flex items-center gap-4 text-lg md:text-xl bg-[#F5EEEA] border border-3 rounded-lg p-3 md:p-4">
           <Linkedin size={24} />
-          <a href={data.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-800 hover:underline">LinkedIn Profile</a>
+          <a
+            href={data.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-800 hover:underline"
+          >
+            LinkedIn Profile
+          </a>
         </div>
 
         {/* GitHub */}
         <div className="flex items-center bg-[#E2F0FF] gap-4 text-lg md:text-xl border border-3 rounded-lg p-3 md:p-4">
           <Github size={24} />
-          <a href={data.github} target="_blank" rel="noopener noreferrer" className="text-black hover:underline">GitHub Profile</a>
+          <a
+            href={data.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-black hover:underline"
+          >
+            GitHub Profile
+          </a>
         </div>
 
         {/* Instagram */}

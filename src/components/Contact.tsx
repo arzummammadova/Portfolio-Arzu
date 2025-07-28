@@ -24,6 +24,12 @@ const Contact = () => {
         fill
         className="object-cover w-full h-full z-0 hidden lg:block"
       />
+      <Image src="/images/spark.png" alt='spark' width={200} height={200} className='absolute top-0 left-0' />
+      <Image src="/images/spark.png" alt='spark' width={200} height={200} className='absolute top-0 left-0' />
+      <Image src="/images/spark.png" alt='spark' width={200} height={200} className='absolute top-5 left-5' />
+      <Image src="/images/spark.png" alt='spark' width={200} height={200} className='absolute top-0 left-0' />
+      
+      <Image src="/images/spark2.png" alt='spark' width={400} height={400} />
 
       {/* Başlıq */}
       <h2 className="text-3xl sm:text-5xl md:text-7xl absolute top-8 sm:top-10 md:top-1/2 left-4 sm:left-6 md:left-[10%] w-[90%] md:w-[30%] tracking-[0.05em] text-black z-10 text-center md:text-left">

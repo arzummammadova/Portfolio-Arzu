@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import MyCertifications from '@/components/MyCertifications';
 import MyProjects from '@/components/MyProjects';
 import WorkExperience from '@/components/Contact';
+import MySkills from '@/components/MySkills';
 
 export default function Home() {
   useEffect(() => {
@@ -45,6 +46,7 @@ export default function Home() {
       <MyCertifications/>
       <MyProjects/>
       <WorkExperience/>
+      <MySkills/>
     </div>
   );
 }

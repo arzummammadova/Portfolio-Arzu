@@ -16,7 +16,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="w-full h-[900px] relative flex flex-col justify-center items-center overflow-hidden">
+    <div className="w-full border-t  border-gray-300 h-[900px] relative flex flex-col justify-center items-center overflow-hidden">
       <Image
         src="/images/blackline.png"
         alt="blackline"

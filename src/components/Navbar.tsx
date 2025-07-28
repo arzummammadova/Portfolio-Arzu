@@ -13,9 +13,9 @@ const Navbar = () => {
 
   return (
     <div className='container mx-auto px-4 flex justify-between items-center py-6 relative z-50'>
-      <div className="flex items-center">
+      <Link href='/' className="flex items-center">
         <Image src="/images/portfolio-logo.png" alt="Portfolio Logo" width={28} height={28} />
-      </div>
+      </Link>
 
       <div className="flex items-center gap-3">
         <Link

@@ -43,10 +43,12 @@ export default function Home() {
       <div className="custom-cursor"></div>
       <Hero />
       <Education />
+      
       <MyCertifications/>
+      <MySkills/>
+
       <MyProjects/>
       <WorkExperience/>
-      <MySkills/>
     </div>
   );
 }

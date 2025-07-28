@@ -192,9 +192,15 @@ const LetsTalk = () => {
       {/* DECORATIVE ELEMENTS */}
       <div className="absolute top-0 left-0 w-40 h-40 bg-[#CBBEFF] opacity-20 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#A18AFF] opacity-20 rounded-full blur-3xl -z-10"></div>
+      <div className="">
+           {/* <Image src="/images/line2.png" alt='spark' width={300} height={200} className='absolute top-0 left-0 z-[-1]' /> */}
+             <Image src="/images/line2.png" alt='spark' width={600} height={200} className='absolute bottom-0 opacity-70 left-0 z-[-1] rotate-25' />
+               <Image src="/images/line2.png" alt='spark' width={600} height={200} className='absolute top-5 opacity-70 right-0 z-[-1] rotate-0' />
+      </div>
 
         <Image src="/images/spark.png" alt='spark' width={200} height={200} className='absolute top-0 left-0' />
             <Image src="/images/spark.png" alt='spark' width={200} height={200} className='absolute top-0 left-0 z-[-1]' />
+           
             <Image src="/images/spark.png" alt='spark' width={200} height={200} className='absolute top-5 left-2 opacity-25 z-[-1]' />
           
             <Image src="/images/spark2.png" alt='spark' width={400} height={400}className='absolute top-20 opacity-60 left-0 z-[-1]' />

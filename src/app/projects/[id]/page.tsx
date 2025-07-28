@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import Image from 'next/image' // Corrected import
-import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { motion, easeOut } from 'framer-motion' // <<-- IMPORT 'easeOut' here
 import {
   Github,
   ExternalLink,
@@ -16,10 +16,10 @@ type Project = {
   title: string
   description: string
   image: string
-  githubLink: string
+  githubLink?: string // Changed to optional as per previous suggestion
   liveLink?: string
   figmaLink?: string
-  technologies: string[]
+  technologies?: string[] // Changed to optional as per previous suggestion
   video?: string
 }
 
@@ -28,7 +28,7 @@ const fadeUp = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.15, duration: 0.6, ease: 'easeOut' },
+    transition: { delay: i * 0.15, duration: 0.6, ease: easeOut }, // <<-- USE imported easeOut
   }),
 }
 
@@ -128,20 +128,25 @@ const ProjectDetail = () => {
 
           <div>
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Technologies Used:</h2>
-            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-              {project.technologies.map((tech, i) => (
-                <motion.span
-                  key={i}
-                  custom={i + 2} // Continue custom values for staggered animation
-                  variants={fadeUp}
-                  className="px-4 py-2 rounded-full text-white font-medium shadow-md
-                    bg-gradient-to-r from-[#D6C7FF] via-[#B9A9FF] to-[#A595FF]
-                    hover:brightness-110 transition duration-300 cursor-default"
-                >
-                  {tech}
-                </motion.span>
-              ))}
-            </div>
+            {project.technologies && project.technologies.length > 0 ? ( // Added check for empty array
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+                {project.technologies.map((tech, i) => (
+                  <motion.span
+                    key={i}
+                    custom={i + 2} // Continue custom values for staggered animation
+                    variants={fadeUp}
+                    className="px-4 py-2 rounded-full text-white font-medium shadow-md
+                      bg-gradient-to-r from-[#D6C7FF] via-[#B9A9FF] to-[#A595FF]
+                      hover:brightness-110 transition duration-300 cursor-default"
+                  >
+                    {tech}
+                  </motion.span>
+                ))}
+              </div>
+            ) : (
+                // Optional: Render a message if no technologies are available
+                <p className="text-gray-500 text-sm">No technologies listed.</p>
+            )}
           </div>
 
           <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
@@ -201,7 +206,7 @@ const ProjectDetail = () => {
         </motion.div>
       </motion.div>
 
-      
+
     </div>
   )
 }

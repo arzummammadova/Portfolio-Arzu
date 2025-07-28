@@ -11,11 +11,12 @@ const MyCertifications = () => {
         ['04', 'Sifirdan Komple Veb gelisdirme', 'Udemy', ''],
     ];
     return (
-        <div className='mt-[140px]'>
+        <div className='mt-[140px] relative'>
             <Title text='My Certifications' />
             <Table headers={['Order', 'University Name', 'Degree/Program', 'Year']} data={educationData} />
-            <div className="relative w-full h-[400px]">
+            <div className=" w-full h-[400px] absolute opacity-60 top-30  z-[-2]">
                 <Image
+                
                     src="/images/line.png"
                     alt="line"
                     fill

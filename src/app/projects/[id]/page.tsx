@@ -2,8 +2,15 @@
 
 import React, { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import Image from 'next/image'
-import { FaGithub, FaExternalLinkAlt, FaFigma, FaVideo, FaArrowLeft } from 'react-icons/fa'
+import Image from 'next/image' // Corrected import
+import { motion } from 'framer-motion'
+import {
+  Github,
+  ExternalLink,
+  Figma,
+  Video,
+  ArrowLeft
+} from 'lucide-react'
 
 type Project = {
   title: string
@@ -15,6 +22,25 @@ type Project = {
   technologies: string[]
   video?: string
 }
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.15, duration: 0.6, ease: 'easeOut' },
+  }),
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1, // Stagger children animations
+    },
+  },
+};
 
 const ProjectDetail = () => {
   const router = useRouter()
@@ -31,7 +57,8 @@ const ProjectDetail = () => {
         const data = await res.json()
         setProject(data)
       } catch (err) {
-        setError('Proyekt detalları yüklənərkən xəta baş verdi.')
+        console.error("Failed to fetch project:", err); // Log the actual error for debugging
+        setError('An error occurred while loading project details.')
       }
     }
     fetchProject()
@@ -39,14 +66,14 @@ const ProjectDetail = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-white">
-        <div className="bg-gray-50 p-8 rounded-lg shadow-xl text-center">
+      <div className="min-h-screen flex items-center justify-center p-6 bg-transparent">
+        <div className="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md">
           <p className="text-red-600 text-xl font-semibold mb-4">{error}</p>
           <button
             onClick={() => router.back()}
-            className="mt-4 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center mx-auto"
+            className="mt-4 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300 flex items-center justify-center mx-auto"
           >
-            <FaArrowLeft className="mr-2" /> Geri Qayıt
+            <ArrowLeft className="mr-2" size={20} /> Go Back
           </button>
         </div>
       </div>
@@ -55,32 +82,33 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-white">
-        <div className="bg-gray-50 p-8 rounded-lg shadow-xl text-center">
-          <p className='text-gray-700 text-xl font-semibold'>Proyekt detalları yüklənir...</p>
-          <div className="mt-4 animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+      <div className="min-h-screen flex items-center justify-center p-6 bg-transparent">
+        <div className="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md">
+          <p className="text-gray-800 text-xl font-semibold">Loading project details...</p>
+          <div className="mt-4 animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-white p-6 sm:p-10 flex items-center justify-center">
-      <div className="bg-gray-50 rounded-2xl shadow-2xl p-6 md:p-10 max-w-5xl w-full flex flex-col lg:flex-row gap-8">
-        {/* Sol tərəf: Şəkil və Video */}
-        <div className="flex-shrink-0 lg:w-1/2 flex flex-col gap-6 items-center justify-center">
-          {project.image && (
-            <div className="w-full flex justify-center">
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={600}
-                height={400}
-                unoptimized
-                className="rounded-xl shadow-lg object-cover w-full h-auto max-w-full transition-transform duration-300"
-              />
-            </div>
-          )}
+    <div className="min-h-screen p-6 sm:p-10 flex items-center justify-center bg-transparent">
+      <motion.div
+        className="rounded-3xl p-6 md:p-10 max-w-6xl w-full flex flex-col lg:flex-row gap-10"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants} // Apply container variants
+      >
+        {/* Left: Image / Video */}
+        <motion.div className="lg:w-1/2 space-y-6" variants={fadeUp} custom={0}>
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={600}
+            height={400}
+            unoptimized // Use unoptimized for external images or if you don't need Next.js image optimization
+            className="rounded-xl shadow-lg w-full object-cover"
+          />
           {project.video && (
             <div className="relative w-full pb-[56.25%] h-0 rounded-xl overflow-hidden shadow-lg">
               <iframe
@@ -91,82 +119,89 @@ const ProjectDetail = () => {
               ></iframe>
             </div>
           )}
-        </div>
+        </motion.div>
 
-        {/* Sağ tərəf: Mətn detalları */}
-        <div className="flex-1 lg:w-1/2 flex flex-col justify-center text-center lg:text-left">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
-            {project.title}
-          </h1>
-          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-            {project.description}
-          </p>
+        {/* Right: Details */}
+        <motion.div className="flex-1 lg:w-1/2 space-y-6 text-center lg:text-left" variants={fadeUp} custom={1}>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 leading-tight">{project.title}</h1>
+          <p className="text-lg text-gray-700">{project.description}</p>
 
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">İstifadə Olunan Texnologiyalar:</h2>
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">Technologies Used:</h2>
             <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
-              {project.technologies.map((tech, index) => (
-                <span
-                  key={index}
-                  className="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium shadow-sm hover:bg-blue-200 hover:scale-105 transition-all duration-200"
+              {project.technologies.map((tech, i) => (
+                <motion.span
+                  key={i}
+                  custom={i + 2} // Continue custom values for staggered animation
+                  variants={fadeUp}
+                  className="px-4 py-2 rounded-full text-white font-medium shadow-md
+                    bg-gradient-to-r from-[#D6C7FF] via-[#B9A9FF] to-[#A595FF]
+                    hover:brightness-110 transition duration-300 cursor-default"
                 >
                   {tech}
-                </span>
+                </motion.span>
               ))}
             </div>
           </div>
 
-          <div className="flex flex-wrap justify-center lg:justify-start gap-4 mt-auto">
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+            {/* GitHub black bg, white text */}
             {project.githubLink && (
               <a
                 href={project.githubLink}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='flex items-center px-5 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition duration-300 shadow-md transform hover:scale-105'
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center px-5 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition duration-300 shadow-md"
               >
-                <FaGithub className="mr-2 text-xl" /> GitHub
+                <Github className="mr-2" size={20} /> GitHub
               </a>
             )}
+
+            {/* Other buttons: white bg, black text & border, invert on hover */}
             {project.liveLink && (
               <a
                 href={project.liveLink}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='flex items-center px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 shadow-md transform hover:scale-105'
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center px-5 py-2 border border-black bg-white text-black rounded-lg hover:bg-black hover:text-white transition duration-300 shadow-md"
               >
-                <FaExternalLinkAlt className="mr-2 text-xl" /> Canlı Demo
+                <ExternalLink className="mr-2" size={20} /> Live Demo
               </a>
             )}
             {project.figmaLink && (
               <a
                 href={project.figmaLink}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='flex items-center px-5 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300 shadow-md transform hover:scale-105'
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center px-5 py-2 border border-black bg-white text-black rounded-lg hover:bg-black hover:text-white transition duration-300 shadow-md"
               >
-                <FaFigma className="mr-2 text-xl" /> Figma Dizayn
+                <Figma className="mr-2" size={20} /> Figma Design
               </a>
             )}
             {project.video && (
               <a
                 href={project.video}
-                target='_blank'
-                rel='noopener noreferrer'
-                className='flex items-center px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300 shadow-md transform hover:scale-105'
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center px-5 py-2 border border-black bg-white text-black rounded-lg hover:bg-black hover:text-white transition duration-300 shadow-md"
               >
-                <FaVideo className="mr-2 text-xl" /> Video Bax
+                <Video className="mr-2" size={20} /> Watch Video
               </a>
             )}
           </div>
 
-          <button
-            onClick={() => router.back()}
-            className="mt-8 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center mx-auto lg:mx-0 w-fit"
-          >
-            <FaArrowLeft className="mr-2" /> Geri Qayıt
-          </button>
-        </div>
-      </div>
+          <div className="pt-6">
+            <button
+              onClick={() => router.back()}
+              className="px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition duration-300 flex items-center mx-auto lg:mx-0"
+            >
+              <ArrowLeft className="mr-2" size={20} /> Go Back
+            </button>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      
     </div>
   )
 }

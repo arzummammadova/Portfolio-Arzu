@@ -14,16 +14,17 @@ const Navbar = () => {
   return (
     <div className='container mx-auto px-4 flex justify-between items-center py-6 relative z-50'>
       <div className="flex items-center">
-        <Image src="/images/portfolio-logo.png" alt="Portfolio Logo" width={40} height={40} />
+        <Image src="/images/portfolio-logo.png" alt="Portfolio Logo" width={28} height={28} />
       </div>
 
       <div className="flex items-center gap-3">
         <Link
-          href="/letstalk"
-          className="border text-black bg-white text-xl justify-center items-center rounded-xl px-5 py-2 flex gap-3 hover:bg-black hover:text-white transition"
-        >
+        href="/letstalk"
+        className="hidden sm:flex border text-black bg-white text-xl justify-center items-center rounded-xl px-5 py-2 gap-3 hover:bg-black hover:text-white transition"
+      >
           Let's talk <ChevronRight />
         </Link>
+
 
         <div className="md:order-last border px-5 py-2 rounded-xl">
           <MenuIcon
@@ -35,9 +36,8 @@ const Navbar = () => {
       </div>
 
       <div
-        className={`fixed top-0 right-0 h-full bg-white w-64 shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
-          menuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 h-full bg-white w-64 shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${menuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <ul className='flex flex-col p-8 space-y-4 text-xl mt-16'>
           <li>

@@ -32,15 +32,19 @@ const Hero = () => {
           Front-End <span className="text-[#6B6B6B]">dev</span>eloper
         </h1>
 
-        <div className="mt-10 flex gap-1">
-          <span className="border px-3 py-1 text-2xl rounded-full">A</span>
-          <span className="border px-3 py-1 text-2xl rounded-full">R</span>
-          <span className="border px-3 py-1 text-2xl rounded-full">Z</span>
-          <span className="border px-3 py-1 text-2xl rounded-full">U</span>
+        <div className="mt-10 flex gap-2 flex-wrap">
+          {['A', 'R', 'Z', 'U'].map((char, i) => (
+            <span
+              key={i}
+              className="border w-9 h-9 text-xl lg:w-12 lg:h-12 sm:w-8 sm:h-8 sm:text-2xl rounded-full flex items-center justify-center"
+            >
+              {char}
+            </span>
+          ))}
         </div>
 
-        <button className="flex justify-center gap-2 mt-9 bg-black text-white w-[300px] text-xl py-5 rounded-[2rem] hover:bg-white hover:text-black transition-colors border">
-          Let&#39;s talk <MoveUpRight />
+        <button className="flex justify-center gap-2 mt-9 bg-black text-white w-[170px] sm:w-[140px] md:w-[200px] lg:w-[300px] text-lg py-3 lg:py-5 rounded-[2rem] hover:bg-white hover:text-black transition-colors border">
+          Let&#39;s talk <MoveUpRight size={24} />
         </button>
       </div>
 
@@ -50,7 +54,7 @@ const Hero = () => {
         width={200}
         height={200}
         className="bubble-left w-[120px] sm:w-[100px] lg:w-[220px] md:w-[220px]"
-      
+
       />
 
       <Image

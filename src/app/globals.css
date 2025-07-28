@@ -153,7 +153,7 @@ body {
 
 .bubble-right-education {
   position: absolute;
-  bottom: 0rem;
+  bottom: -8rem;
   right: 0;
   z-index: 0;
   animation: float-left 4s ease-in-out infinite;

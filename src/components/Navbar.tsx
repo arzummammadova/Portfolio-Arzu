@@ -1,8 +1,8 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import { ChevronRight, MenuIcon } from 'lucide-react';
-import Link from 'next/link'; // düz yolu budur!
+import { ChevronRight, MenuIcon, FileText } from 'lucide-react'; // Import FileText icon
+import Link from 'next/link';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = React.useState(false);
@@ -10,6 +10,8 @@ const Navbar = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+    const cvDownloadLink = "/ArzuMammadovaCV.pdf";
+
 
   return (
     <div className='container mx-auto px-4 flex justify-between items-center py-6 relative z-50'>
@@ -18,10 +20,19 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-3">
+        {/* CV Download Icon */}
+        <a
+  href={cvDownloadLink} // Local path from public folder          download="ArzuMammadova.pdf" // You can change the downloaded file name here
+          className="flex border text-black bg-white text-xl justify-center items-center rounded-xl px-5 py-2 gap-3 hover:bg-black hover:text-white transition"
+        >
+          <FileText size={20} /> {/* CV Icon */}
+          CV
+        </a>
+
         <Link
-        href="/letstalk"
-        className="hidden sm:flex border text-black bg-white text-xl justify-center items-center rounded-xl px-5 py-2 gap-3 hover:bg-black hover:text-white transition"
-      >
+          href="/letstalk"
+          className="hidden sm:flex border text-black bg-white text-xl justify-center items-center rounded-xl px-5 py-2 gap-3 hover:bg-black hover:text-white transition"
+        >
           Let's talk <ChevronRight />
         </Link>
 
@@ -49,6 +60,18 @@ const Navbar = () => {
             <Link href="/letstalk" onClick={toggleMenu} className="block text-gray-800 hover:text-blue-600 text-2xl font-semibold">
               Let's Talk
             </Link>
+          </li>
+          {/* CV Download Icon in mobile menu */}
+          <li>
+            <a
+              href="https://drive.google.com/file/d/1XpIGzk3bAj9eJWRDhZwpML5c7Mqt_t1J/view?usp=drive_link"
+              download="Your_CV_Name.pdf"
+              onClick={toggleMenu}
+              className="block text-gray-800 hover:text-blue-600 text-2xl font-semibold flex items-center gap-2"
+            >
+              <FileText size={24} /> {/* CV Icon for mobile */}
+              CV
+            </a>
           </li>
         </ul>
       </div>

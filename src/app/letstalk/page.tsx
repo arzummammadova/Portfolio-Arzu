@@ -3,132 +3,148 @@
 import { Mail, Linkedin, Github, Instagram, MapPin, Send } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
-import { useState } from 'react' // Ensure useState is imported
+// import Image from 'next/image' // next/image importu kaldırıldı ve img tag'i ile değiştirildi
+import { useState } from 'react' // `useState` hookunu import etdiyinizdən əmin olun
 
-// Define contact data
+// Definieer een interface voor de structuur van de formulierdata
+interface FormData {
+    name: string;
+    email: string;
+    message: string;
+}
+
+// Definieer een interface voor de structuur van de validatiefouten
+interface FormErrors {
+    name?: string;
+    email?: string;
+    message?: string;
+    general?: string; // Voor algemene foutmeldingen, bijv. van de backend
+}
+
+// Kontakt məlumatlarını təyin edirik
 const data = {
     email: 'arzuimammadova@gmail.com',
     linkedin: 'https://www.linkedin.com/in/arzu-mammadova-892b25269',
     github: 'https://github.com/arzummammadova',
-    instagram: ['arzummmm'], // Assuming this might be an array if there are multiple handles
+    instagram: ['arzummmm'], // Birdən çox hesab ola biləcəyi ehtimalına görə massiv kimi təyin olunub
     address: 'Baku, Azerbaijan',
 }
 
 const LetsTalk = () => {
-    // Hook for checking if the component is in view for animation
+    // Komponentin görünüş sahəsində olub olmadığını yoxlamaq üçün hook
     const { ref, inView } = useInView({ triggerOnce: true })
 
-    // State to hold form input data
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-    // State to manage loading status during form submission
+    // Form giriş məlumatlarını saxlamaq üçün state, met type FormData
+    const [formData, setFormData] = useState<FormData>({ name: '', email: '', message: '' });
+    // Form göndərilməsi zamanı yüklənmə vəziyyətini idarə etmək üçün state
     const [loading, setLoading] = useState(false);
-    // State to manage the submission status ('success', 'error', or null)
-    const [status, setStatus] = useState(null);
-    // State to hold validation error messages for each field
-    const [validationErrors, setValidationErrors] = useState({});
+    // Göndərilmə statusunu idarə etmək üçün state ('success', 'error', və ya null)
+    const [status, setStatus] = useState<string | null>(null);
+    // Hər sahə üçün validasiya xəta mesajlarını saxlamaq üçün state, met type FormErrors
+    const [validationErrors, setValidationErrors] = useState<FormErrors>({});
 
     /**
-     * Client-side form validation logic.
-     * Checks if fields are empty and if email format is valid.
-     * @returns {boolean} True if the form is valid, false otherwise.
+     * Frontend validasiya məntiqi.
+     * Sahələrin boş olub olmadığını və email formatının düzgünlüyünü yoxlayır.
+     * @returns {boolean} Forma düzgündürsə true, əks halda false qaytarır.
      */
     const validateForm = () => {
-        const errors = {};
+        // Gebruik FormErrors type voor de errors object
+        const errors: FormErrors = {};
         if (!formData.name.trim()) {
-            errors.name = 'Name is required.';
+            errors.name = 'Ad tələb olunur.';
         }
         if (!formData.email.trim()) {
-            errors.email = 'Email is required.';
+            errors.email = 'Email tələb olunur.';
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            // Basic regex for email format validation
-            errors.email = 'Email is invalid.';
+            // Email formatı üçün sadə regex
+            errors.email = 'Email formatı düzgün deyil.';
         }
         if (!formData.message.trim()) {
-            errors.message = 'Message is required.';
+            errors.message = 'Mesaj tələb olunur.';
         }
-        setValidationErrors(errors); // Update validation errors state
-        return Object.keys(errors).length === 0; // Return true if no errors were found
+        setValidationErrors(errors); // Validasiya xətalarını yeniləyir
+        return Object.keys(errors).length === 0; // Xəta yoxdursa true qaytarır
     };
 
     /**
-     * Handles changes in form input fields.
-     * Updates formData state and clears relevant validation errors as user types.
-     * @param {Object} e - The event object from the input change.
+     * Form giriş sahələrindəki dəyişiklikləri idarə edir.
+     * `formData` state-ni yeniləyir və istifadəçi yazdıqca müvafiq validasiya xətalarını təmizləyir.
+     * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>} e - Giriş dəyişikliyindən gələn event obyekti.
      */
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
-        // Clear specific validation error for the changed field as user types
-        if (validationErrors[e.target.id]) {
+        // İstifadəçi yazdıqca dəyişən sahə üçün xətanı təmizləyir
+        if (validationErrors[e.target.id as keyof FormErrors]) { // Type assertion toegevoegd
             setValidationErrors(prevErrors => {
                 const newErrors = { ...prevErrors };
-                delete newErrors[e.target.id]; // Remove the error for this field
+                delete newErrors[e.target.id as keyof FormErrors]; // Type assertion toegevoegd
                 return newErrors;
             });
         }
     };
 
     /**
-     * Handles form submission.
-     * Performs validation, sends data to backend, and updates UI status.
-     * @param {Object} e - The event object from the form submission.
+     * Form göndərilməsini idarə edir.
+     * Validasiya aparır, məlumatları backende göndərir və UI statusunu yeniləyir.
+     * @param {React.FormEvent<HTMLFormElement>} e - Form göndərilməsindən gələn event obyekti.
      */
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior (page reload)
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); // Formun defolt göndərilmə davranışını (səhifə yenilənməsi) qarşısını alır
 
-        // Perform client-side validation first
+        // Əvvəlcə frontend validasiyası aparılır
         const isValid = validateForm();
         if (!isValid) {
-            // If validation fails, set status to error and stop submission
+            // Validasiya uğursuz olarsa, statusu 'error'a təyin edir və göndərməni dayandırır
             setStatus('error');
             return;
         }
 
-        setLoading(true); // Indicate that submission is in progress
-        setStatus(null); // Clear any previous success/error messages
-        setValidationErrors({}); // Clear any existing validation errors from previous attempts
+        setLoading(true); // Göndərilmənin davam etdiyini göstərir
+        setStatus(null); // Əvvəlki uğur/xəta mesajlarını təmizləyir
+        setValidationErrors({}); // Əvvəlki cəhdlərdən qalan validasiya xətalarını təmizləyir
 
         try {
-            // Send the form data to your Node.js backend
-            const response = await fetch('http://localhost:5000/api/contact', { // IMPORTANT: Ensure this URL matches your backend!
+            // Form məlumatlarını Node.js backendinizə göndərir
+            const response = await fetch('https://portfolio-arzu-api.onrender.com/api/contact', { // ƏHƏMİYYƏTLİ: Bu URL backendinizə uyğun olduğundan əmin olun!
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData), // Convert form data to JSON string
+                body: JSON.stringify(formData), // Form məlumatlarını JSON stringinə çevirir
             });
 
-            const result = await response.json(); // Parse the JSON response from the backend
+            const result = await response.json(); // Backenddən gələn JSON cavabı parse edir
 
             if (response.ok) {
-                // If the response status is 2xx (success)
+                // Cavab statusu 2xx (uğurlu) olarsa
                 setStatus('success');
-                setFormData({ name: '', email: '', message: '' }); // Clear the form fields on success
+                setFormData({ name: '', email: '', message: '' }); // Uğurlu olduqda form sahələrini təmizləyir
             } else {
-                // If the response status is an error (e.g., 4xx, 5xx)
+                // Cavab statusu xəta olarsa (məsələn, 4xx, 5xx)
                 setStatus('error');
-                console.error('Form submission error:', result.message);
-                // Display the specific error message from the backend if available
-                setValidationErrors({ general: result.message || 'An unexpected error occurred. Please try again.' });
+                console.error('Form göndərmə xətası:', result.message);
+                // Backenddən gələn xüsusi xəta mesajını göstərir
+                setValidationErrors({ general: result.message || 'Gözlənilməz bir xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.' });
             }
-        } catch (error) {
-            // Catch network errors (e.g., backend not running, no internet connection)
+        } catch (error: any) { // Specificeer het type van error als 'any' of 'unknown'
+            // Şəbəkə xətalarını tutur (məsələn, backend işləmir, internet bağlantısı yoxdur)
             setStatus('error');
-            console.error('Network or server error:', error);
-            setValidationErrors({ general: 'Could not connect to the server. Please check your network connection and ensure the backend is running.' });
+            console.error('Şəbəkə və ya server xətası:', error);
+            setValidationErrors({ general: 'Serverə qoşulmaq mümkün olmadı. Zəhmət olmasa şəbəkə bağlantınızı yoxlayın və backendin işlədiyinə əmin olun.' });
         } finally {
-            setLoading(false); // Reset loading state regardless of success or failure
+            setLoading(false); // Uğurdan və ya uğursuzluqdan asılı olmayaraq yüklənmə vəziyyətini sıfırlayır
         }
     };
 
     return (
         <section className="relative min-h-screen flex items-center justify-center px-4 md:px-10 lg:py-20 md:py-18 sm:py-4">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mx-auto px-12 w-full">
-                {/* LEFT SIDE - CONTACT INFO */}
+                {/* SOL TƏRƏF - KONTAKT MƏLUMATLARI */}
                 <div className="grid grid-cols-1 md:h-70 sm:h-auto sm:grid-cols-2 gap-4 md:gap-6">
-                    {/* Email Contact Card */}
+                    {/* Email Kontakt Kartı */}
                     <motion.div
-                        whileHover={{ y: -5 }} // Simple hover animation
+                        whileHover={{ y: -5 }} // Sadə hover animasiyası
                         className="bg-red-50 p-4 border-2 rounded-xl md:rounded-2xl h-auto md:h-[100px] flex items-center"
                     >
                         <div className="flex items-center gap-3 w-full">
@@ -148,7 +164,7 @@ const LetsTalk = () => {
                         </div>
                     </motion.div>
 
-                    {/* LinkedIn Contact Card */}
+                    {/* LinkedIn Kontakt Kartı */}
                     <motion.div
                         whileHover={{ y: -5 }}
                         className="bg-blue-50 p-4 border-2 rounded-xl md:rounded-2xl h-auto md:h-[100px] flex items-center"
@@ -166,13 +182,13 @@ const LetsTalk = () => {
                                     className="text-[#9D75FF] hover:underline text-sm md:text-base break-words block"
                                     style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
                                 >
-                                    Connect with me
+                                    Mənimlə əlaqə saxlayın
                                 </a>
                             </div>
                         </div>
                     </motion.div>
 
-                    {/* GitHub Contact Card */}
+                    {/* GitHub Kontakt Kartı */}
                     <motion.div
                         whileHover={{ y: -5 }}
                         className="p-4 border-2 bg-amber-50 rounded-xl md:rounded-2xl h-auto md:h-[100px] flex items-center"
@@ -190,13 +206,13 @@ const LetsTalk = () => {
                                     className="text-[#9D75FF] hover:underline text-sm md:text-base break-words block"
                                     style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
                                 >
-                                    View my work
+                                    İşlərimə baxın
                                 </a>
                             </div>
                         </div>
                     </motion.div>
 
-                    {/* Location Contact Card */}
+                    {/* Yerləşmə Kontakt Kartı */}
                     <motion.div
                         whileHover={{ y: -5 }}
                         className="border-2 bg-green-50 p-4 rounded-xl md:rounded-2xl h-auto md:h-[100px] flex items-center"
@@ -206,7 +222,7 @@ const LetsTalk = () => {
                                 <MapPin className="text-[#28A745]" size={20} />
                             </div>
                             <div className="flex-1 min-w-0 overflow-hidden">
-                                <h3 className="font-medium text-gray-500 text-sm">Location</h3>
+                                <h3 className="font-medium text-gray-500 text-sm">Yerləşmə</h3>
                                 <span
                                     className="text-[#9D75FF] text-sm md:text-base break-words block"
                                     style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
@@ -219,130 +235,131 @@ const LetsTalk = () => {
                 </div>
 
 
-                {/* RIGHT SIDE - CONTACT FORM */}
+                {/* SAĞ TƏRƏF - KONTAKT FORMU */}
                 <motion.div
-                    ref={ref} // Reference for intersection observer
-                    initial={{ opacity: 0, x: 50 }} // Initial animation state
-                    animate={inView ? { opacity: 1, x: 0 } : {}} // Animate when in view
-                    transition={{ duration: 0.8, ease: 'easeOut' }} // Animation duration and easing
+                    ref={ref} // Görünüş müşahidəçisi üçün istinad
+                    initial={{ opacity: 0, x: 50 }} // Başlanğıc animasiya vəziyyəti
+                    animate={inView ? { opacity: 1, x: 0 } : {}} // Görünüş sahəsində olduqda animasiya
+                    transition={{ duration: 0.8, ease: 'easeOut' }} // Animasiya müddəti və yumşaq keçid
                     className="bg-white border-2 p-6 md:p-10 rounded-2xl md:rounded-3xl shadow-xl md:shadow-2xl"
                 >
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Send me a message</h3>
-                    <p className="text-gray-600 mb-6 md:mb-8">I'll get back to you as soon as possible</p>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Mənə mesaj göndərin</h3>
+                    <p className="text-gray-600 mb-6 md:mb-8">Sizə ən qısa zamanda cavab verəcəm</p>
 
                     <form
                         className="space-y-4 md:space-y-6"
-                        onSubmit={handleSubmit} // Attach the handleSubmit function
+                        onSubmit={handleSubmit} // handleSubmit funksiyasını əlavə edir
                     >
-                        {/* Name Input Field */}
+                        {/* Ad Giriş Sahəsi */}
                         <div className="space-y-2">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                                Your Name
+                                Adınız
                             </label>
                             <input
                                 id="name"
                                 type="text"
-                                required // HTML5 built-in validation
+                                required // HTML5 daxili validasiya
                                 value={formData.name}
                                 onChange={handleChange}
                                 className={`w-full px-4 py-2 md:py-3 rounded-lg border ${validationErrors.name ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-[#9D75FF] focus:border-transparent transition`}
-                                placeholder="Enter your name"
+                                placeholder="Adınızı daxil edin"
                             />
-                            {/* Display client-side validation error for name */}
+                            {/* Ad üçün frontend validasiya xətasını göstərir */}
                             {validationErrors.name && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.name}</p>
                             )}
                         </div>
 
-                        {/* Email Input Field */}
+                        {/* Email Giriş Sahəsi */}
                         <div className="space-y-2">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email Address
+                                Email Ünvanı
                             </label>
                             <input
                                 id="email"
                                 type="email"
-                                required // HTML5 built-in validation
+                                required // HTML5 daxili validasiya
                                 value={formData.email}
                                 onChange={handleChange}
                                 className={`w-full px-4 py-2 md:py-3 rounded-lg border ${validationErrors.email ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-[#9D75FF] focus:border-transparent transition`}
-                                placeholder="your@email.com"
+                                placeholder="sizin@emailiniz.com"
                             />
-                            {/* Display client-side validation error for email */}
+                            {/* Email üçün frontend validasiya xətasını göstərir */}
                             {validationErrors.email && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.email}</p>
                             )}
                         </div>
 
-                        {/* Message Textarea Field */}
+                        {/* Mesaj Textarea Sahəsi */}
                         <div className="space-y-2">
                             <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                                Your Message
+                                Mesajınız
                             </label>
                             <textarea
                                 id="message"
                                 rows={4}
-                                required // HTML5 built-in validation
+                                required // HTML5 daxili validasiya
                                 value={formData.message}
                                 onChange={handleChange}
                                 className={`w-full px-4 py-2 md:py-3 rounded-lg border ${validationErrors.message ? 'border-red-500' : 'border-gray-300'} focus:ring-2 focus:ring-[#9D75FF] focus:border-transparent transition`}
-                                placeholder="What would you like to discuss?"
+                                placeholder="Nəyi müzakirə etmək istərdiniz?"
                             ></textarea>
-                            {/* Display client-side validation error for message */}
+                            {/* Mesaj üçün frontend validasiya xətasını göstərir */}
                             {validationErrors.message && (
                                 <p className="text-red-500 text-xs mt-1">{validationErrors.message}</p>
                             )}
                         </div>
 
-                        {/* Submit Button */}
+                        {/* Göndər Düyməsi */}
                         <button
                             type="submit"
                             className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#000000] to-[#000000] text-white py-3 md:py-4 px-6 rounded-lg hover:opacity-90 transition-all duration-300 shadow-md hover:shadow-lg"
-                            disabled={loading} // Disable button when form is submitting
+                            disabled={loading} // Forma göndərilərkən düyməni deaktiv edir
                         >
                             {loading ? (
-                                'Sending...' // Show "Sending..." text when loading
+                                'Göndərilir...' // Yüklənmə zamanı "Göndərilir..." mətnini göstərir
                             ) : (
                                 <>
                                     <Send size={18} className="text-white" />
-                                    <span>Send Message</span>
+                                    <span>Mesaj Göndər</span>
                                 </>
                             )}
                         </button>
 
-                        {/* Submission Status Messages */}
+                        {/* Göndərilmə Status Mesajları */}
                         {status === 'success' && (
-                            <p className="text-green-600 text-center mt-4">Message sent successfully! I'll get back to you soon.</p>
+                            <p className="text-green-600 text-center mt-4">Mesaj uğurla göndərildi! Sizə tezliklə geri dönüş edəcəm.</p>
                         )}
-                        {status === 'error' && !validationErrors.general && ( // Show general error if no specific field errors from backend
-                            <p className="text-red-600 text-center mt-4">Failed to send message. Please correct the errors and try again.</p>
+                        {status === 'error' && !validationErrors.general && ( // Backenddən xüsusi sahə xətaları yoxdursa ümumi xətanı göstərir
+                            <p className="text-red-600 text-center mt-4">Mesaj göndərilmədi. Zəhmət olmasa xətaları düzəldin və yenidən cəhd edin.</p>
                         )}
-                        {validationErrors.general && ( // Display a general error from backend if any
+                        {validationErrors.general && ( // Backenddən gələn ümumi xətanı göstərir
                             <p className="text-red-500 text-center mt-4">{validationErrors.general}</p>
                         )}
                     </form>
                 </motion.div>
             </div>
 
-            {/* DECORATIVE ELEMENTS (Assuming image paths are correct in public folder) */}
+            {/* DEKORATİV ELEMENTLƏR (Şəkil yollarının public qovluğunda düzgün olduğunu fərz edərək) */}
             <div className="absolute top-0 left-0 w-40 h-40 bg-[#CBBEFF] opacity-20 rounded-full blur-3xl -z-10"></div>
             <div className="absolute bottom-0 right-0 w-60 h-60 bg-[#A18AFF] opacity-20 rounded-full blur-3xl -z-10"></div>
             <div className="">
-                <Image src="/images/line2.png" alt='Decorative line' width={600} height={200} className='absolute bottom-0 opacity-70 left-0 z-[-1] rotate-25' />
-                <Image src="/images/line2.png" alt='Decorative line' width={600} height={200} className='absolute top-5 opacity-70 right-0 z-[-1] rotate-0' />
+                {/* next/image yerine standart img tag'leri kullanıldı */}
+                <img src="/images/line2.png" alt='Dekorativ xətt' width={600} height={200} className='absolute bottom-0 opacity-70 left-0 z-[-1] rotate-25' />
+                <img src="/images/line2.png" alt='Dekorativ xətt' width={600} height={200} className='absolute top-5 opacity-70 right-0 z-[-1] rotate-0' />
             </div>
 
-            <Image src="/images/spark.png" alt='Decorative spark' width={200} height={200} className='absolute top-0 left-0' />
-            <Image src="/images/spark.png" alt='Decorative spark' width={200} height={200} className='absolute top-0 left-0 z-[-1]' />
+            <img src="/images/spark.png" alt='Dekorativ qığılcım' width={200} height={200} className='absolute top-0 left-0' />
+            <img src="/images/spark.png" alt='Dekorativ qığılcım' width={200} height={200} className='absolute top-0 left-0 z-[-1]' />
 
-            <Image src="/images/spark.png" alt='Decorative spark' width={200} height={200} className='absolute top-5 left-2 opacity-25 z-[-1]' />
+            <img src="/images/spark.png" alt='Dekorativ qığılcım' width={200} height={200} className='absolute top-5 left-2 opacity-25 z-[-1]' />
 
-            <Image src="/images/spark2.png" alt='Decorative spark' width={400} height={400} className='absolute top-20 opacity-60 left-0 z-[-1]' />
+            <img src="/images/spark2.png" alt='Dekorativ qığılcım' width={400} height={400} className='absolute top-20 opacity-60 left-0 z-[-1]' />
 
-            <Image src="/images/spark2.png" alt='Decorative spark' width={400} height={400} className='absolute bottom-0 opacity-50 left-0 z-[-1]' />
-            <Image src="/images/spark2.png" alt='Decorative spark' width={400} height={400} className='absolute top-0 opacity-20 right-0 z-[0]' />
+            <img src="/images/spark2.png" alt='Dekorativ qığılcım' width={400} height={400} className='absolute bottom-0 opacity-50 left-0 z-[-1]' />
+            <img src="/images/spark2.png" alt='Dekorativ qığılcım' width={400} height={400} className='absolute top-0 opacity-20 right-0 z-[0]' />
 
-            <Image src="/images/spark2.png" alt='Decorative spark' width={400} height={400} className='absolute right-0 bottom-0 z-[-1]' />
+            <img src="/images/spark2.png" alt='Dekorativ qığılcım' width={400} height={400} className='absolute right-0 bottom-0 z-[-1]' />
         </section>
     )
 }

@@ -1,10 +1,10 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { Github, ExternalLink, Figma } from 'lucide-react'
+import { Github, ExternalLink, Figma, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Title from './Title'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 type Project = {
   _id: string
@@ -28,6 +28,7 @@ const MyProjects = () => {
   const router = useRouter()
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
+  const [showScrollHint, setShowScrollHint] = useState(false)
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -38,6 +39,14 @@ const MyProjects = () => {
         }
         const data = await res.json()
         setProjects(data)
+
+        if (data.length > 0) { // En az bir proje varsa
+          const timer = setTimeout(() => {
+            setShowScrollHint(false)
+          }, 3000) // İpucunu 3 saniye göster
+          setShowScrollHint(true)
+          return () => clearTimeout(timer)
+        }
       } catch (error) {
         console.error('Failed to fetch projects', error)
       } finally {
@@ -53,9 +62,9 @@ const MyProjects = () => {
       <Title text="My Projects" />
 
       {loading ? (
-        <div className="text-center text-lg text-gray-600 mt-10 animate-pulse">Loading projects...</div>
+        <div className="text-center text-lg text-gray-600 mt-10 animate-pulse">Projeler yükleniyor...</div>
       ) : (
-        <div className="max-h-[85vh] overflow-y-auto snap-y snap-mandatory pr-2 custom-scroll">
+        <div className="max-h-[80vh] overflow-y-auto snap-y snap-mandatory pr-2 custom-scroll relative">
           {projects.map((project, index) => (
             <motion.div
               key={project._id}
@@ -72,7 +81,7 @@ const MyProjects = () => {
                   router.push(`/projects/${project._id}`)
                 }}
                 className="absolute top-4 right-4 p-2 rounded-full bg-black text-white hover:bg-gray-800 transition z-10"
-                aria-label="Go to project details"
+                aria-label="Proje detaylarına git"
               >
                 <ExternalLink size={20} />
               </button>
@@ -130,7 +139,7 @@ const MyProjects = () => {
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 text-sm border border-black text-black px-4 py-2 rounded-xl hover:bg-black hover:text-white transition"
                     >
-                      <ExternalLink size={18} /> Live
+                      <ExternalLink size={18} /> Canlı
                     </a>
                   )}
                   {project.figmaLink && (
@@ -148,6 +157,19 @@ const MyProjects = () => {
               </div>
             </motion.div>
           ))}
+          <AnimatePresence>
+            {showScrollHint && projects.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-full text-sm flex items-center gap-2 shadow-lg z-20 md:hidden"
+              >
+                Daha fazlası için kaydırın <ChevronDown size={16} className="animate-bounce" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       )}
     </section>

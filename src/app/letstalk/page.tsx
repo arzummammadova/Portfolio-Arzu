@@ -23,7 +23,7 @@ const data = {
     linkedin: 'https://www.linkedin.com/in/arzu-mammadova-892b25269',
     github: 'https://github.com/arzummammadova',
     instagram: ['arzummmm'],
-    address: 'Baku, Azerbaijan',
+    address: 'Sumgait, Azerbaijan',
 }
 
 const LetsTalk = () => {

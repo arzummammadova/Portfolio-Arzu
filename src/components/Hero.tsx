@@ -28,7 +28,7 @@ const Hero = () => {
           />
         </p>
 
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl w-full md:w-[70%] lg:w-[50%] mt-5 leading-tight">
+        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl w-full md:w-[70%] lg:w-[50%] mt-5 leading-tight">
           Front-End <span className="text-[#6B6B6B]">dev</span>eloper
         </h1>
 
@@ -36,14 +36,14 @@ const Hero = () => {
           {['A', 'R', 'Z', 'U'].map((char, i) => (
             <span
               key={i}
-              className="border w-9 h-9 text-xl lg:w-12 lg:h-12 sm:w-8 sm:h-8 sm:text-2xl rounded-full flex items-center justify-center"
+              className="border w-9 h-9 text-xl lg:w-10 lg:h-10 sm:w-8 sm:h-8 sm:text-2xl rounded-full flex items-center justify-center"
             >
               {char}
             </span>
           ))}
         </div>
 
-        <button className="flex justify-center gap-2 mt-9 bg-black text-white w-[170px] sm:w-[140px] md:w-[200px] lg:w-[300px] text-lg py-3 lg:py-5 rounded-[2rem] hover:bg-white hover:text-black transition-colors border">
+        <button className="flex justify-center gap-2 mt-9 bg-black text-white w-[170px] sm:w-[140px] md:w-[200px] lg:w-[270px] text-lg py-3 lg:py-3 rounded-[2rem] hover:bg-white hover:text-black transition-colors border">
           Let&#39;s talk <MoveUpRight size={24} />
         </button>
       </div>

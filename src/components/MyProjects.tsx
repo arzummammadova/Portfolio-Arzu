@@ -3,14 +3,14 @@
 import React, { useEffect, useState } from 'react'
 import { Github, ExternalLink, Figma } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import Title from './Title' // Assuming Title component exists
+import Title from './Title'
 import { motion } from 'framer-motion'
 
 type Project = {
   _id: string
   title: string
   description: string
-  image?: string // Made image optional
+  image?: string
   githubLink?: string
   liveLink?: string
   figmaLink?: string
@@ -33,8 +33,8 @@ const MyProjects = () => {
     const fetchProjects = async () => {
       try {
         const res = await fetch('https://portfolio-arzu-api.onrender.com/api/projects')
-        if (!res.ok) { // Check if response is OK
-            throw new Error(`HTTP error! status: ${res.status}`);
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`)
         }
         const data = await res.json()
         setProjects(data)
@@ -59,14 +59,13 @@ const MyProjects = () => {
           {projects.map((project, index) => (
             <motion.div
               key={project._id}
-              className="relative h-[65vh] w-full flex flex-col lg:flex-row rounded-3xl overflow-hidden border shadow-md snap-start bg-white cursor-pointer mb-16"
+              className="relative h-[80vh] sm:h-[65vh] w-full flex flex-col lg:flex-row rounded-3xl overflow-hidden border shadow-md snap-start bg-white cursor-pointer mb-16"
               onClick={() => router.push(`/projects/${project._id}`)}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {/* Right top icon - navigate to detail */}
               <button
                 onClick={(e) => {
                   e.stopPropagation()
@@ -78,31 +77,23 @@ const MyProjects = () => {
                 <ExternalLink size={20} />
               </button>
 
-              {/* Left - Image */}
               <div
-                className="w-full lg:w-1/2 h-60 lg:h-full bg-cover bg-center"
-                // Add a check for project.image here
+                className="w-full lg:w-1/2 h-2/5 sm:h-60 lg:h-full bg-cover bg-center"
                 style={{ backgroundImage: project.image ? `url(${project.image})` : 'none' }}
               />
 
-              {/* Right - Content */}
               <div className="w-full lg:w-1/2 p-6 lg:p-10 flex flex-col justify-between">
                 <div>
                   <h2 className="text-2xl lg:text-3xl font-bold mb-4">{project.title}</h2>
 
-                  {/* Description: limit 50 words on small screens, 100 on larger */}
                   <p className="text-gray-700 text-md lg:text-lg leading-relaxed mb-4">
-                    <span className="block lg:hidden">
+                    <span className="block">
                       {truncateWords(project.description, 50)}
-                    </span>
-                    <span className="hidden lg:block">
-                      {truncateWords(project.description, 100)}
                     </span>
                   </p>
 
                   {project.technologies && (
                     <div className="flex flex-wrap gap-2 my-4">
-                      {/* Show max 5 on small screens, all on lg+ */}
                       {project.technologies.slice(0, 5).map((tech, i) => (
                         <span
                           key={i}
@@ -112,9 +103,8 @@ const MyProjects = () => {
                         </span>
                       ))}
 
-                      {/* If more than 5 techs and small screen, show "..." */}
                       {project.technologies.length > 5 && (
-                        <span className="text-xs lg:hidden text-gray-500 px-3 py-1">...</span>
+                        <span className="text-xs text-gray-500 px-3 py-1">...</span>
                       )}
                     </div>
                   )}

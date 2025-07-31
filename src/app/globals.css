@@ -219,3 +219,50 @@ body {
     scrollbar-color: #9ca3af #f9fafb; /* Firefox için daha koyu renkler */
   }
 }
+
+.custom-cursor {
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url('https://cdn3d.iconscout.com/3d/premium/thumb/humanoid-girl-wears-bib-overall-3d-icon-download-in-png-blend-fbx-gltf-file-formats--female-woman-avatars-pack-people-icons-8762291.png');
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.15s ease, top 0.2s, left 0.2s;
+  transform: translate(-50%, -50%);
+}
+
+/* Mouse move effect */
+.custom-cursor.active {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Scroll effect - like falling */
+.custom-cursor.scrolling {
+  animation: fall 0.3s ease;
+}
+
+@keyframes fall {
+  0% { transform: translate(-50%, -50%) translateY(-10px); }
+  100% { transform: translate(-50%, -50%) translateY(10px); }
+}
+
+/* Hover effect */
+.custom-cursor.hovering {
+  filter: drop-shadow(0 0 10px #ff69b4);
+  transform: translate(-50%, -50%) scale(1.2) rotate(5deg);
+}
+
+/* Voice jump effect */
+.custom-cursor.voice-react {
+  animation: jumpRotate 0.5s ease;
+}
+
+@keyframes jumpRotate {
+  0% { transform: translate(-50%, -50%) scale(1.1) rotate(0deg); }
+  50% { transform: translate(-50%, -70%) scale(1.3) rotate(20deg); }
+  100% { transform: translate(-50%, -50%) scale(1.1) rotate(0deg); }
+}

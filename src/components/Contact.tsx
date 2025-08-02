@@ -12,7 +12,7 @@ const Contact = () => {
     linkedin:
       'https://www.linkedin.com/in/arzu-mammadova-892b25269?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
     github: 'https://github.com/arzummammadova',
-    instagram: ['codingwitharzuui', 'justarzuui'],
+    instagram: ['codingwitharzui', 'justarzuui'],
     address: 'Azerbaijan',
   };
 

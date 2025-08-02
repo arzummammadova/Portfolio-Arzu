@@ -7,7 +7,7 @@ const Footer = () => {
             <p>
                 &copy; {new Date().getFullYear()} Arzu. All rights reserved.
             </p>
-                Made with ❤️ using Next.js and React.
+                Made with ❤️ using Next.js and Node.js
 
 
         </div>

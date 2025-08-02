@@ -6,7 +6,7 @@ import Image from 'next/image';
 const Education = () => {
   const educationData = [
     ['01', 'Azerbaijan Technical University (SABAH Groups)', 'bachelor degree', '2023-2026'],
-    ['02', 'Sumgait State University', 'bachelor degree', '2026-2028'],
+    ['02', 'Sumgait State University', 'bachelor degree', '2022-2023'],
     ['03', 'Code Academy', 'Software Development', '2024 sep-2025 feb'],
     ['04', 'Technest Codinarium', 'Web programming', '2024'],
   ];

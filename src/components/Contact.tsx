@@ -12,7 +12,7 @@ const Contact = () => {
     linkedin:
       'https://www.linkedin.com/in/arzu-mammadova-892b25269?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
     github: 'https://github.com/arzummammadova',
-    // instagram: ['codingwitharzui', 'justarzuui'],
+    instagram: ['codingwitharzui'],
     address: 'Azerbaijan',
   };
 
@@ -81,7 +81,7 @@ const Contact = () => {
         </div>
 
         {/* Instagram */}
-        {/* <div className="flex flex-col gap-2 bg-[#FFFCE2] text-lg md:text-xl border border-3 rounded-lg p-3 md:p-4">
+        <div className="flex flex-col gap-2 bg-[#FFFCE2] text-lg md:text-xl border border-3 rounded-lg p-3 md:p-4">
           <div className="flex items-center gap-4">
             <Instagram size={24} />
             <span>Instagram:</span>
@@ -100,7 +100,7 @@ const Contact = () => {
               </li>
             ))}
           </ul>
-        </div> */}
+        </div>
 
         {/* Address */}
         <div className="flex items-center gap-4 bg-[#EBFFE2] text-lg md:text-xl border border-3 rounded-lg p-3 md:p-4">

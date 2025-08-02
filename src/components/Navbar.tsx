@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import { ChevronRight, MenuIcon, FileText } from 'lucide-react'; // Import FileText icon
+import { ChevronRight, MenuIcon, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 const Navbar = () => {

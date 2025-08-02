@@ -14,7 +14,7 @@ const Hero = () => {
               "Hello! I am Arzu",
               "I am Arzu Mammadova, a final-year student at Azerbaijan Technical University.",
               "I specialize in front-end development with React, Redux, Tailwind CSS, and Material UI.",
-              "I am currently learning Next.js, Zustand, and Zod.",
+              "I am currently learning Next.js, TypeScript",
               "I also have backend experience with Node.js, Express.js, and MongoDB.",
               // "Recently, I started learning Oracle SQL.",
               "My goal is to become a full-stack developer and build impactful digital products."

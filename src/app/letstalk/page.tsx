@@ -62,47 +62,45 @@ const LetsTalk = () => {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const isValid = validateForm();
-        if (!isValid) {
+ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setStatus(null);
+    setValidationErrors({});
+
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            setStatus('success');
+            setFormData({ name: '', email: '', message: '' });
+        } else {
             setStatus('error');
-            return;
-        }
 
-        setLoading(true);
-        setStatus(null);
-        setValidationErrors({});
-
-        try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                setStatus('success');
-                setFormData({ name: '', email: '', message: '' });
+            // Backend-dən gələn validation error-ları frontend-ə tətbiq edirik
+            if (result.errors) {
+                setValidationErrors(result.errors);
             } else {
-                setStatus('error');
-                console.error('Form submission error:', result.message);
                 setValidationErrors({
                     general: result.message || 'An unexpected error occurred. Please try again.',
                 });
             }
-        } catch (error: any) {
-            setStatus('error');
-            console.error('Network or server error:', error);
-            setValidationErrors({
-                general: 'Unable to connect to the server. Please check your connection and make sure the backend is running.',
-            });
-        } finally {
-            setLoading(false);
         }
-    };
+    } catch (error: any) {
+        setStatus('error');
+        setValidationErrors({
+            general: 'Unable to connect to the server. Please check your connection and make sure the backend is running.',
+        });
+    } finally {
+        setLoading(false);
+    }
+};
 
     return (
         <section className="relative min-h-screen flex items-center justify-center px-4 md:px-10 lg:py-20 md:py-18 sm:py-4">

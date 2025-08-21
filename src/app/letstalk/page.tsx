@@ -75,7 +75,7 @@ const LetsTalk = () => {
         setValidationErrors({});
 
         try {
-            const response = await fetch('https://portfolio-arzu-api.onrender.com/api/contact', {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),

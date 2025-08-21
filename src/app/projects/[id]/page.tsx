@@ -52,7 +52,7 @@ const ProjectDetail = () => {
     const fetchProject = async () => {
       if (!id) return
       try {
-        const res = await fetch(`https://portfolio-arzu-api.onrender.com/api/projects/${id}`)
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/${id}`)
         if (!res.ok) throw new Error('Fetch failed')
         const data = await res.json()
         setProject(data)

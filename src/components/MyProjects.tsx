@@ -33,7 +33,8 @@ const MyProjects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch('https://portfolio-arzu-api.onrender.com/api/projects')
+       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`);
+
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`)
         }
